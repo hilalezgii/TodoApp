@@ -8,7 +8,7 @@ const Header = ({ todoCount }: { todoCount: number }) => {
         <Box className="px-4 py-8 mt-4">
             <HStack className="justify-between items-center">
                 <Text className="text-orange-500 font-bold text-3xl">
-                    YAPILACAKLAR
+                    TODO APP
                 </Text>
                 <Text className="text-orange-500 font-bold text-3xl">
                     {todoCount}
