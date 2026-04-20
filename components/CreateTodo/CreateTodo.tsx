@@ -32,7 +32,7 @@ const CreateTodo =
                             className={"text-white"}
                         />
                     </Input>
-                    <Button onPress={onCreateTodo} className="bg-orange-500">
+                    <Button onPress={onCreateTodo} className="bg-orange-500 rounded-lg">
                         <ButtonText className="text-white font-bold">KAYDET</ButtonText>
                     </Button>
                 </VStack>
