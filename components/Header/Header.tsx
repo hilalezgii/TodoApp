@@ -3,7 +3,11 @@ import { Box } from "@/components/ui/box";
 import { Text } from "@/components/ui/text";
 import { HStack } from "@/components/ui/hstack";
 
-const Header = ({ todoCount }: { todoCount: number }) => {
+type HeaderProps = {
+  todoCount: number;
+};
+
+const Header = ({ todoCount }: HeaderProps) => {
   return (
     <Box className="px-4 py-8 mt-4">
       <HStack className="justify-between items-center">

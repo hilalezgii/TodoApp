@@ -3,7 +3,7 @@ import Header from "@/components/Header/Header";
 import CreateTodo from "../components/CreateTodo/CreateTodo";
 import { useEffect, useMemo, useState } from "react";
 import TodoList from "@/components/TodoList/TodoList";
-import { TodoStatus, SectionTitles } from "@/types/todo";
+import { TodoStatus } from "@/types/todo";
 
 export default function Home() {
   const [todos, setTodos] = useState([]);

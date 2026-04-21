@@ -4,7 +4,11 @@ import { VStack } from "@/components/ui/vstack";
 import { Input, InputField } from "@/components/ui/input";
 import { Button, ButtonText } from "@/components/ui/button";
 
-const CreateTodo = ({ createTodo }: { createTodo: (text: string) => void }) => {
+type CreateTodoProps = {
+  createTodo: (text: string) => void;
+};
+
+const CreateTodo = ({ createTodo }: CreateTodoProps) => {
   const [text, setText] = useState("");
 
   const onCreateTodo = () => {

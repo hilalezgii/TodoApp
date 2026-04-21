@@ -5,12 +5,18 @@ import { VStack } from "@/components/ui/vstack";
 import { FlatList } from "react-native";
 import { TodoStatus, SectionTitles } from "@/types/todo";
 
-interface TodoListProps {
-  todoTasks: any[];
-  inProgressTasks: any[];
-  doneTasks: any[];
-  updateStatus: (id: number, newStatus: string) => void;
-}
+type Todo = {
+  id: number;
+  title: string;
+  status: TodoStatus;
+};
+
+type TodoListProps = {
+  todoTasks: Todo[];
+  inProgressTasks: Todo[];
+  doneTasks: Todo[];
+  updateStatus: (id: number, newStatus: TodoStatus) => void;
+};
 
 const TodoList = ({
   todoTasks,
