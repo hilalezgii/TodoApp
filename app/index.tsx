@@ -5,8 +5,10 @@ import { useEffect, useMemo, useReducer, useState } from "react";
 import TodoList from "@/components/TodoList/TodoList";
 import { TodoStatus } from "@/types/todo";
 import { todoReducer } from "../store/todoReducer";
+import { useTodo } from "../store/todoContext";
+
 export default function Home() {
-  const [todos, dispatch] = useReducer(todoReducer, []);
+  const { todos, dispatch } = useTodo();
 
   const todoCount = useMemo(() => {
     return todos.filter((t) => t.status !== TodoStatus.DONE).length;
