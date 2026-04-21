@@ -32,9 +32,6 @@ export default function Home() {
     };
     setTodos([...todos, newTodo]);
   };
-  useEffect(() => {
-    console.log("Güncel Todolar:", todos);
-  }, [todos]);
 
   const handleUpdateTodos = (id: number, newStatus: string) => {
     const updated = todos.map((todo) =>
