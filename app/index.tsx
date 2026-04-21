@@ -1,12 +1,12 @@
 import { Box } from "@/components/ui/box";
 import Header from "@/components/Header/Header";
 import CreateTodo from "../components/CreateTodo/CreateTodo";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useReducer, useState } from "react";
 import TodoList from "@/components/TodoList/TodoList";
 import { TodoStatus } from "@/types/todo";
-
+import { todoReducer } from "../store/todoReducer";
 export default function Home() {
-  const [todos, setTodos] = useState([]);
+  const [todos, dispatch] = useReducer(todoReducer, []);
 
   const todoCount = useMemo(() => {
     return todos.filter((t) => t.status !== TodoStatus.DONE).length;
@@ -26,20 +26,17 @@ export default function Home() {
   );
 
   const handleCreateTodo = (title: string) => {
-    const newTodo = {
-      id: Date.now(),
-      title: title,
-      status: TodoStatus.TODO,
-    };
-    setTodos((prev) => [...prev, newTodo]);
+    dispatch({
+      type: "ADD_TODO",
+      payload: title,
+    });
   };
 
-  const handleUpdateTodos = (id: number, newStatus: string) => {
-    setTodos((prev) =>
-      prev.map((todo) =>
-        todo.id === id ? { ...todo, status: newStatus } : todo,
-      ),
-    );
+  const handleUpdateTodos = (id: number, newStatus: TodoStatus) => {
+    dispatch({
+      type: "UPDATE_STATUS",
+      payload: { id, newStatus },
+    });
   };
 
   return (
