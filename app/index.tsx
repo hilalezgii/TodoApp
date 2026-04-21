@@ -3,24 +3,25 @@ import Header from "@/components/Header/Header";
 import CreateTodo from "../components/CreateTodo/CreateTodo";
 import { useEffect, useMemo, useState } from "react";
 import TodoList from "@/components/TodoList/TodoList";
+import { TodoStatus, SectionTitles } from "@/types/todo";
 
 export default function Home() {
   const [todos, setTodos] = useState([]);
 
   const todoCount = useMemo(() => {
-    return todos.filter((t) => t.status !== "done").length;
+    return todos.filter((t) => t.status !== TodoStatus.DONE).length;
   }, [todos]);
 
   const todoTasks = useMemo(
-    () => todos.filter((t) => t.status === "todo"),
+    () => todos.filter((t) => t.status === TodoStatus.TODO),
     [todos],
   );
   const inProgressTasks = useMemo(
-    () => todos.filter((t) => t.status === "in_progress"),
+    () => todos.filter((t) => t.status === TodoStatus.IN_PROGRESS),
     [todos],
   );
   const doneTasks = useMemo(
-    () => todos.filter((t) => t.status === "done"),
+    () => todos.filter((t) => t.status === TodoStatus.DONE),
     [todos],
   );
 
@@ -28,16 +29,17 @@ export default function Home() {
     const newTodo = {
       id: Date.now(),
       title: title,
-      status: "todo",
+      status: TodoStatus.TODO,
     };
-    setTodos([...todos, newTodo]);
+    setTodos((prev) => [...prev, newTodo]);
   };
 
   const handleUpdateTodos = (id: number, newStatus: string) => {
-    const updated = todos.map((todo) =>
-      todo.id === id ? { ...todo, status: newStatus } : todo,
+    setTodos((prev) =>
+      prev.map((todo) =>
+        todo.id === id ? { ...todo, status: newStatus } : todo,
+      ),
     );
-    setTodos(updated);
   };
 
   return (

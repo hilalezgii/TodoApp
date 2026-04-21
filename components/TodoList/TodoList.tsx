@@ -3,6 +3,7 @@ import { Box } from "@/components/ui/box";
 import { Text } from "@/components/ui/text";
 import { VStack } from "@/components/ui/vstack";
 import { FlatList } from "react-native";
+import { TodoStatus, SectionTitles } from "@/types/todo";
 
 interface TodoListProps {
   todoTasks: any[];
@@ -21,48 +22,48 @@ const TodoList = ({
     ({ item }: { item: any }) => (
       <Box
         className={`bg-slate-800 p-3 rounded-xl mb-2 border-l-4 ${
-          item.status === "todo"
+          item.status === TodoStatus.TODO
             ? "border-orange-500"
-            : item.status === "in_progress"
+            : item.status === TodoStatus.IN_PROGRESS
               ? "border-blue-400"
               : "border-green-500 opacity-60"
         }`}
       >
         <Text
-          className={`text-white font-medium ${item.status === "done" ? "line-through text-slate-500" : ""}`}
+          className={`text-white font-medium ${item.status === TodoStatus.DONE ? "line-through text-slate-500" : ""}`}
         >
           {item.title}
         </Text>
 
         <Box className="mt-2 flex-row gap-4">
-          {item.status === "todo" && (
+          {item.status === TodoStatus.TODO && (
             <Text
               className="text-blue-400 text-xs font-bold"
-              onPress={() => updateStatus(item.id, "in_progress")}
+              onPress={() => updateStatus(item.id, TodoStatus.IN_PROGRESS)}
             >
               BAŞLAT
             </Text>
           )}
-          {item.status === "in_progress" && (
+          {item.status === TodoStatus.IN_PROGRESS && (
             <>
               <Text
                 className="text-orange-500 text-xs font-bold"
-                onPress={() => updateStatus(item.id, "todo")}
+                onPress={() => updateStatus(item.id, TodoStatus.TODO)}
               >
                 GERİ AL
               </Text>
               <Text
                 className="text-green-500 text-xs font-bold"
-                onPress={() => updateStatus(item.id, "done")}
+                onPress={() => updateStatus(item.id, TodoStatus.DONE)}
               >
                 TAMAMLA
               </Text>
             </>
           )}
-          {item.status === "done" && (
+          {item.status === TodoStatus.DONE && (
             <Text
               className="text-blue-400 text-xs font-bold"
-              onPress={() => updateStatus(item.id, "in_progress")}
+              onPress={() => updateStatus(item.id, TodoStatus.IN_PROGRESS)}
             >
               DEVAM ET
             </Text>
@@ -99,17 +100,17 @@ const TodoList = ({
   return (
     <VStack space="none" className="flex-1 pb-10">
       <ListCategory
-        title="YAPILACAKLAR"
+        title={SectionTitles.TODO}
         data={todoTasks}
         colorClass="text-orange-500"
       />
       <ListCategory
-        title="DEVAM EDENLER"
+        title={SectionTitles.IN_PROGRESS}
         data={inProgressTasks}
         colorClass="text-cyan-300"
       />
       <ListCategory
-        title="TAMAMLANANLAR"
+        title={SectionTitles.DONE}
         data={doneTasks}
         colorClass="text-green-500"
       />
