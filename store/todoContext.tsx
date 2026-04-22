@@ -15,13 +15,22 @@ interface TodoContextType {
   todoTasks: any[];
   inProgressTasks: any[];
   doneTasks: any[];
-  dispatch: React.Dispatch<todoAction>;
+  addTodo: (title: string) => void;
+  updateStatus: (id: number, newStatus: TodoStatus) => void;
 }
 export const TodoContext = createContext<TodoContextType | undefined>(
   undefined,
 );
 export const TodoProvider = ({ children }: { children: ReactNode }) => {
   const [todos, dispatch] = useReducer(todoReducer, []);
+
+  const addTodo = (title: string) => {
+    dispatch({ type: "ADD_TODO", payload: title });
+  };
+
+  const updateStatus = (id: number, newStatus: TodoStatus) => {
+    dispatch({ type: "UPDATE_STATUS", payload: { id, newStatus } });
+  };
 
   const todoCount = useMemo(() => {
     return todos.filter((t) => t.status !== TodoStatus.DONE).length;
@@ -31,10 +40,12 @@ export const TodoProvider = ({ children }: { children: ReactNode }) => {
     () => todos.filter((t) => t.status === TodoStatus.TODO),
     [todos],
   );
+
   const inProgressTasks = useMemo(
     () => todos.filter((t) => t.status === TodoStatus.IN_PROGRESS),
     [todos],
   );
+
   const doneTasks = useMemo(
     () => todos.filter((t) => t.status === TodoStatus.DONE),
     [todos],
@@ -44,11 +55,12 @@ export const TodoProvider = ({ children }: { children: ReactNode }) => {
     <TodoContext.Provider
       value={{
         todos,
-        dispatch,
         todoCount,
         todoTasks,
         inProgressTasks,
         doneTasks,
+        addTodo,
+        updateStatus,
       }}
     >
       {children}
