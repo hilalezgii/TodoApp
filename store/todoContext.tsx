@@ -3,11 +3,11 @@ import React, {
   useReducer,
   ReactNode,
   useContext,
-  Dispatch,
   useMemo,
 } from "react";
-import { todoReducer, todoAction } from "./todoReducer";
+import { todoReducer } from "./todoReducer";
 import { TodoStatus } from "@/types/todo";
+import { TODO_CONTEXT_KEYS } from "@/constants";
 
 interface TodoContextType {
   todos: any[];
@@ -17,6 +17,7 @@ interface TodoContextType {
   doneTasks: any[];
   addTodo: (title: string) => void;
   updateStatus: (id: number, newStatus: TodoStatus) => void;
+  initialize: (todoList: any[]) => void;
 }
 export const TodoContext = createContext<TodoContextType | undefined>(
   undefined,
@@ -24,12 +25,19 @@ export const TodoContext = createContext<TodoContextType | undefined>(
 export const TodoProvider = ({ children }: { children: ReactNode }) => {
   const [todos, dispatch] = useReducer(todoReducer, []);
 
+  const initialize = (todoList: any[]) => {
+    dispatch({ type: TODO_CONTEXT_KEYS.INITIALIZE, payload: todoList });
+  };
+
   const addTodo = (title: string) => {
-    dispatch({ type: "ADD_TODO", payload: title });
+    dispatch({ type: TODO_CONTEXT_KEYS.ADD_TODO, payload: title });
   };
 
   const updateStatus = (id: number, newStatus: TodoStatus) => {
-    dispatch({ type: "UPDATE_STATUS", payload: { id, newStatus } });
+    dispatch({
+      type: TODO_CONTEXT_KEYS.UPDATE_STATUS,
+      payload: { id, newStatus },
+    });
   };
 
   const todoCount = useMemo(() => {
@@ -61,6 +69,7 @@ export const TodoProvider = ({ children }: { children: ReactNode }) => {
         doneTasks,
         addTodo,
         updateStatus,
+        initialize,
       }}
     >
       {children}
