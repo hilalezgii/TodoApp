@@ -8,6 +8,7 @@ import React, {
 import { todoReducer } from "./todoReducer";
 import { TodoStatus } from "@/types/todo";
 import { TODO_CONTEXT_KEYS } from "@/constants";
+import { todoCache, getCachedTodos, removeCache } from "./todoCache";
 
 interface TodoContextType {
   todos: any[];
@@ -18,6 +19,7 @@ interface TodoContextType {
   addTodo: (title: string) => void;
   updateStatus: (id: number, newStatus: TodoStatus) => void;
   initialize: (todoList: any[]) => void;
+  removeCache: () => void;
 }
 export const TodoContext = createContext<TodoContextType | undefined>(
   undefined,
@@ -25,12 +27,24 @@ export const TodoContext = createContext<TodoContextType | undefined>(
 export const TodoProvider = ({ children }: { children: ReactNode }) => {
   const [todos, dispatch] = useReducer(todoReducer, []);
 
-  const initialize = (todoList: any[]) => {
+  const initialize = async (todoList: any[]) => {
+    const cached = getCachedTodos();
+    console.log("Initialize çağrıldı, cached:", cached);
+    if (cached) {
+      console.log("cache yüklendi");
+      dispatch({ type: TODO_CONTEXT_KEYS.INITIALIZE, payload: cached });
+      return;
+    }
+    console.log("initializing");
     dispatch({ type: TODO_CONTEXT_KEYS.INITIALIZE, payload: todoList });
+    todoCache(todoList);
+    await new Promise((res) => setTimeout(res, 50));
+    const verify = getCachedTodos();
   };
 
   const addTodo = (title: string) => {
     dispatch({ type: TODO_CONTEXT_KEYS.ADD_TODO, payload: title });
+    todoCache([...todos, { title }]);
   };
 
   const updateStatus = (id: number, newStatus: TodoStatus) => {
@@ -38,6 +52,15 @@ export const TodoProvider = ({ children }: { children: ReactNode }) => {
       type: TODO_CONTEXT_KEYS.UPDATE_STATUS,
       payload: { id, newStatus },
     });
+    const updated = todos.map(
+      (t: { id: number; status: TodoStatus; title: string }) =>
+        t.id === id ? { ...t, status: newStatus } : t,
+    );
+    todoCache(updated);
+  };
+  const clearCache = () => {
+    removeCache();
+    console.log("Cache temizlendi!");
   };
 
   const todoCount = useMemo(() => {

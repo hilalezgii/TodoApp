@@ -3,9 +3,10 @@ import Header from "@/components/Header/Header";
 import CreateTodo from "../components/CreateTodo/CreateTodo";
 import TodoList from "@/components/TodoList/TodoList";
 import { useTodo } from "../store/todoContext";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { storage } from "@/store/todoStorage";
 import { STORAGE_KEYS } from "@/constants";
+import { AppState } from "react-native";
 
 export default function Home() {
   const {
@@ -18,10 +19,28 @@ export default function Home() {
     initialize,
   } = useTodo();
 
-  useEffect(() => {
+  const appState = useRef(AppState.currentState);
+
+  const loadTodos = () => {
     const todoList = storage.getString(STORAGE_KEYS.TODO_LIST) || "[]";
     const _todoList = JSON.parse(todoList);
     initialize(_todoList);
+  };
+
+  useEffect(() => {
+    loadTodos();
+
+    const subscription = AppState.addEventListener("change", (nextAppState) => {
+      if (
+        appState.current.match(/inactive|background/) &&
+        nextAppState === "active"
+      ) {
+        loadTodos();
+      }
+      appState.current = nextAppState;
+    });
+
+    return () => subscription.remove();
   }, []);
 
   return (
