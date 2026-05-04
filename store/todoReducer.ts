@@ -1,4 +1,4 @@
-import { TodoStatus } from "@/types/todo";
+import { TodoStatus, Todo } from "@/types/todo";
 import { storage } from "@/store/todoStorage";
 import { STORAGE_KEYS, TODO_CONTEXT_KEYS } from "@/constants";
 
@@ -8,9 +8,9 @@ export type todoAction =
       type: typeof TODO_CONTEXT_KEYS.UPDATE_STATUS;
       payload: { id: number; newStatus: TodoStatus };
     }
-  | { type: typeof TODO_CONTEXT_KEYS.INITIALIZE; payload: any[] };
+  | { type: typeof TODO_CONTEXT_KEYS.INITIALIZE; payload: Todo[] };
 
-export const todoReducer = (state: any[], action: todoAction) => {
+export const todoReducer = (state: Todo[], action: todoAction) => {
   switch (action.type) {
     case TODO_CONTEXT_KEYS.INITIALIZE:
       return action.payload;

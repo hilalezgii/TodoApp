@@ -8,3 +8,9 @@ export enum SectionTitles {
   IN_PROGRESS = "DEVAM EDENLER",
   DONE = "TAMAMLANANLAR",
 }
+
+export interface Todo {
+  id: number;
+  title: string;
+  status: TodoStatus;
+}

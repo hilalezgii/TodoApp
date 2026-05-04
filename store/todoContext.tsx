@@ -6,19 +6,19 @@ import React, {
   useMemo,
 } from "react";
 import { todoReducer } from "./todoReducer";
-import { TodoStatus } from "@/types/todo";
+import { TodoStatus, Todo } from "@/types/todo";
 import { TODO_CONTEXT_KEYS } from "@/constants";
 import { todoCache, getCachedTodos, removeCache } from "./todoCache";
 
 interface TodoContextType {
-  todos: any[];
+  todos: Todo[];
   todoCount: number;
-  todoTasks: any[];
-  inProgressTasks: any[];
-  doneTasks: any[];
+  todoTasks: Todo[];
+  inProgressTasks: Todo[];
+  doneTasks: Todo[];
   addTodo: (title: string) => void;
   updateStatus: (id: number, newStatus: TodoStatus) => void;
-  initialize: (todoList: any[]) => void;
+  initialize: (todoList: Todo[]) => void;
   removeCache: () => void;
   loadTodos: () => void;
 }
@@ -36,7 +36,7 @@ export const TodoProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
-  const initialize = async (todoList: any[]) => {
+  const initialize = async (todoList: Todo[]) => {
     const cached = getCachedTodos();
     console.log("Initialize çağrıldı, cached:", cached);
     if (cached) {
@@ -61,9 +61,8 @@ export const TodoProvider = ({ children }: { children: ReactNode }) => {
       type: TODO_CONTEXT_KEYS.UPDATE_STATUS,
       payload: { id, newStatus },
     });
-    const updated = todos.map(
-      (t: { id: number; status: TodoStatus; title: string }) =>
-        t.id === id ? { ...t, status: newStatus } : t,
+    const updated = todos.map((t: Todo) =>
+      t.id === id ? { ...t, status: newStatus } : t,
     );
     todoCache(updated);
   };

@@ -3,13 +3,7 @@ import { Box } from "@/components/ui/box";
 import { Text } from "@/components/ui/text";
 import { VStack } from "@/components/ui/vstack";
 import { FlatList } from "react-native";
-import { TodoStatus, SectionTitles } from "@/types/todo";
-
-type Todo = {
-  id: number;
-  title: string;
-  status: TodoStatus;
-};
+import { TodoStatus, SectionTitles, Todo } from "@/types/todo";
 
 type TodoListProps = {
   todoTasks: Todo[];
@@ -25,7 +19,7 @@ const TodoList = ({
   updateStatus,
 }: TodoListProps) => {
   const renderTodoItem = useCallback(
-    ({ item }: { item: any }) => (
+    ({ item }: { item: Todo }) => (
       <Box
         className={`bg-slate-800 p-3 rounded-xl mb-2 border-l-4 ${
           item.status === TodoStatus.TODO
@@ -86,7 +80,7 @@ const TodoList = ({
     colorClass,
   }: {
     title: string;
-    data: any[];
+    data: Todo[];
     colorClass: string;
   }) => (
     <Box className="max-h-64 mb-4">
