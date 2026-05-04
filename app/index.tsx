@@ -3,10 +3,8 @@ import Header from "@/components/Header/Header";
 import CreateTodo from "../components/CreateTodo/CreateTodo";
 import TodoList from "@/components/TodoList/TodoList";
 import { useTodo } from "../store/todoContext";
-import { useEffect, useRef } from "react";
-import { storage } from "@/store/todoStorage";
-import { STORAGE_KEYS } from "@/constants";
-import { AppState } from "react-native";
+import { useEffect } from "react";
+import { useAppState } from "@/hooks/useAppState";
 
 export default function Home() {
   const {
@@ -16,33 +14,13 @@ export default function Home() {
     doneTasks,
     addTodo,
     updateStatus,
-    initialize,
+    loadTodos,
   } = useTodo();
-
-  const appState = useRef(AppState.currentState);
-
-  const loadTodos = () => {
-    const todoList = storage.getString(STORAGE_KEYS.TODO_LIST) || "[]";
-    const _todoList = JSON.parse(todoList);
-    initialize(_todoList);
-  };
 
   useEffect(() => {
     loadTodos();
-
-    const subscription = AppState.addEventListener("change", (nextAppState) => {
-      if (
-        appState.current.match(/inactive|background/) &&
-        nextAppState === "active"
-      ) {
-        loadTodos();
-      }
-      appState.current = nextAppState;
-    });
-
-    return () => subscription.remove();
-  }, []);
-
+  }, [loadTodos]);
+  useAppState(loadTodos);
   return (
     <Box className="flex-1 bg-slate-900 px-4 pt-12">
       <Header todoCount={todoCount} />

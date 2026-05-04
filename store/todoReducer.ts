@@ -3,9 +3,12 @@ import { storage } from "@/store/todoStorage";
 import { STORAGE_KEYS, TODO_CONTEXT_KEYS } from "@/constants";
 
 export type todoAction =
-  | { type: "ADD_TODO"; payload: string }
-  | { type: "UPDATE_STATUS"; payload: { id: number; newStatus: TodoStatus } }
-  | { type: "INITIALIZE"; payload: any[] };
+  | { type: typeof TODO_CONTEXT_KEYS.ADD_TODO; payload: string }
+  | {
+      type: typeof TODO_CONTEXT_KEYS.UPDATE_STATUS;
+      payload: { id: number; newStatus: TodoStatus };
+    }
+  | { type: typeof TODO_CONTEXT_KEYS.INITIALIZE; payload: any[] };
 
 export const todoReducer = (state: any[], action: todoAction) => {
   switch (action.type) {

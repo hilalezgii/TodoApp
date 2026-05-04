@@ -20,12 +20,21 @@ interface TodoContextType {
   updateStatus: (id: number, newStatus: TodoStatus) => void;
   initialize: (todoList: any[]) => void;
   removeCache: () => void;
+  loadTodos: () => void;
 }
 export const TodoContext = createContext<TodoContextType | undefined>(
   undefined,
 );
 export const TodoProvider = ({ children }: { children: ReactNode }) => {
   const [todos, dispatch] = useReducer(todoReducer, []);
+
+  const loadTodos = () => {
+    const cached = getCachedTodos();
+    if (cached) {
+      dispatch({ type: TODO_CONTEXT_KEYS.INITIALIZE, payload: cached });
+      console.log("AppState: Cache'den veriler tazelendi.");
+    }
+  };
 
   const initialize = async (todoList: any[]) => {
     const cached = getCachedTodos();
@@ -93,6 +102,8 @@ export const TodoProvider = ({ children }: { children: ReactNode }) => {
         addTodo,
         updateStatus,
         initialize,
+        loadTodos,
+        removeCache: clearCache,
       }}
     >
       {children}
