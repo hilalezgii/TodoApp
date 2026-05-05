@@ -125,9 +125,16 @@ open class HybridNitroCacheModuleSpec_cxx {
 
   // Methods
   @inline(__always)
-  public final func setItem(key: std.string, value: std.string, ttl: Double) -> bridge.Result_void_ {
+  public final func setItem(key: std.string, value: std.string, ttl: bridge.std__optional_double_) -> bridge.Result_void_ {
     do {
-      try self.__implementation.setItem(key: String(key), value: String(value), ttl: ttl)
+      try self.__implementation.setItem(key: String(key), value: String(value), ttl: { () -> Double? in
+        if bridge.has_value_std__optional_double_(ttl) {
+          let __unwrapped = bridge.get_std__optional_double_(ttl)
+          return __unwrapped
+        } else {
+          return nil
+        }
+      }())
       return bridge.create_Result_void_()
     } catch (let __error) {
       let __exceptionPtr = __error.toCpp()

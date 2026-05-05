@@ -36,7 +36,7 @@ export const TodoProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
-  const initialize = async (todoList: Todo[]) => {
+  const initialize = (todoList: Todo[]) => {
     const cached = getCachedTodos();
     console.log("Initialize çağrıldı, cached:", cached);
     if (cached) {
@@ -47,23 +47,26 @@ export const TodoProvider = ({ children }: { children: ReactNode }) => {
     console.log("initializing");
     dispatch({ type: TODO_CONTEXT_KEYS.INITIALIZE, payload: todoList });
     todoCache(todoList);
-    await new Promise((res) => setTimeout(res, 50));
-    const verify = getCachedTodos();
   };
 
   const addTodo = (title: string) => {
+    const newTodo = {
+      id: Date.now(),
+      title,
+      status: TodoStatus.TODO,
+    };
     dispatch({ type: TODO_CONTEXT_KEYS.ADD_TODO, payload: title });
-    todoCache([...todos, { title }]);
+    todoCache([...todos, newTodo]);
   };
 
   const updateStatus = (id: number, newStatus: TodoStatus) => {
+    const updated = todos.map((t: Todo) =>
+      t.id === id ? { ...t, status: newStatus } : t,
+    );
     dispatch({
       type: TODO_CONTEXT_KEYS.UPDATE_STATUS,
       payload: { id, newStatus },
     });
-    const updated = todos.map((t: Todo) =>
-      t.id === id ? { ...t, status: newStatus } : t,
-    );
     todoCache(updated);
   };
   const clearCache = () => {

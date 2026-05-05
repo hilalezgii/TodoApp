@@ -15,6 +15,7 @@ namespace NitroCacheModule { class HybridNitroCacheModuleSpec_cxx; }
 
 
 #include <string>
+#include <optional>
 #include <NitroModules/Null.hpp>
 #include <variant>
 
@@ -68,8 +69,8 @@ namespace margelo::nitro::nitrocachemodule {
 
   public:
     // Methods
-    inline void setItem(const std::string& key, const std::string& value, double ttl) override {
-      auto __result = _swiftPart.setItem(key, value, std::forward<decltype(ttl)>(ttl));
+    inline void setItem(const std::string& key, const std::string& value, std::optional<double> ttl) override {
+      auto __result = _swiftPart.setItem(key, value, ttl);
       if (__result.hasError()) [[unlikely]] {
         std::rethrow_exception(__result.error());
       }

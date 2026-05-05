@@ -16,6 +16,7 @@
 
 
 #include <string>
+#include <optional>
 #include <NitroModules/Null.hpp>
 #include <variant>
 
@@ -50,7 +51,7 @@ namespace margelo::nitro::nitrocachemodule {
 
     public:
       // Methods
-      virtual void setItem(const std::string& key, const std::string& value, double ttl) = 0;
+      virtual void setItem(const std::string& key, const std::string& value, std::optional<double> ttl) = 0;
       virtual std::variant<nitro::NullType, std::string> getItem(const std::string& key) = 0;
       virtual void removeItem(const std::string& key) = 0;
       virtual void clear() = 0;

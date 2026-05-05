@@ -21,6 +21,7 @@ namespace NitroCacheModule { class HybridNitroCacheModuleSpec_cxx; }
 #include <NitroModules/Result.hpp>
 #include <exception>
 #include <memory>
+#include <optional>
 #include <string>
 #include <variant>
 
@@ -30,6 +31,21 @@ namespace NitroCacheModule { class HybridNitroCacheModuleSpec_cxx; }
  */
 namespace margelo::nitro::nitrocachemodule::bridge::swift {
 
+  // pragma MARK: std::optional<double>
+  /**
+   * Specialized version of `std::optional<double>`.
+   */
+  using std__optional_double_ = std::optional<double>;
+  inline std::optional<double> create_std__optional_double_(const double& value) noexcept {
+    return std::optional<double>(value);
+  }
+  inline bool has_value_std__optional_double_(const std::optional<double>& optional) noexcept {
+    return optional.has_value();
+  }
+  inline double get_std__optional_double_(const std::optional<double>& optional) noexcept {
+    return optional.value();
+  }
+  
   // pragma MARK: std::variant<nitro::NullType, std::string>
   /**
    * Wrapper struct for `std::variant<nitro::NullType, std::string>`.

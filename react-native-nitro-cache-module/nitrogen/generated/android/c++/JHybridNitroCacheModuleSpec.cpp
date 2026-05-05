@@ -14,6 +14,7 @@
 #include <variant>
 #include "JVariant_NullType_String.hpp"
 #include <NitroModules/JNull.hpp>
+#include <optional>
 
 namespace margelo::nitro::nitrocachemodule {
 
@@ -48,9 +49,9 @@ namespace margelo::nitro::nitrocachemodule {
   
 
   // Methods
-  void JHybridNitroCacheModuleSpec::setItem(const std::string& key, const std::string& value, double ttl) {
-    static const auto method = _javaPart->javaClassStatic()->getMethod<void(jni::alias_ref<jni::JString> /* key */, jni::alias_ref<jni::JString> /* value */, double /* ttl */)>("setItem");
-    method(_javaPart, jni::make_jstring(key), jni::make_jstring(value), ttl);
+  void JHybridNitroCacheModuleSpec::setItem(const std::string& key, const std::string& value, std::optional<double> ttl) {
+    static const auto method = _javaPart->javaClassStatic()->getMethod<void(jni::alias_ref<jni::JString> /* key */, jni::alias_ref<jni::JString> /* value */, jni::alias_ref<jni::JDouble> /* ttl */)>("setItem");
+    method(_javaPart, jni::make_jstring(key), jni::make_jstring(value), ttl.has_value() ? jni::JDouble::valueOf(ttl.value()) : nullptr);
   }
   std::variant<nitro::NullType, std::string> JHybridNitroCacheModuleSpec::getItem(const std::string& key) {
     static const auto method = _javaPart->javaClassStatic()->getMethod<jni::local_ref<JVariant_NullType_String>(jni::alias_ref<jni::JString> /* key */)>("getItem");

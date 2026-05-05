@@ -54,7 +54,7 @@ namespace margelo::nitro::nitrocachemodule {
 
   public:
     // Methods
-    void setItem(const std::string& key, const std::string& value, double ttl) override;
+    void setItem(const std::string& key, const std::string& value, std::optional<double> ttl) override;
     std::variant<nitro::NullType, std::string> getItem(const std::string& key) override;
     void removeItem(const std::string& key) override;
     void clear() override;

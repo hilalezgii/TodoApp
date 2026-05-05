@@ -31,7 +31,7 @@ abstract class HybridNitroCacheModuleSpec: HybridObject() {
   // Methods
   @DoNotStrip
   @Keep
-  abstract fun setItem(key: String, value: String, ttl: Double): Unit
+  abstract fun setItem(key: String, value: String, ttl: Double?): Unit
   
   @DoNotStrip
   @Keep

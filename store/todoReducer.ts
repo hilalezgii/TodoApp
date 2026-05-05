@@ -1,6 +1,5 @@
 import { TodoStatus, Todo } from "@/types/todo";
-import { storage } from "@/store/todoStorage";
-import { STORAGE_KEYS, TODO_CONTEXT_KEYS } from "@/constants";
+import { TODO_CONTEXT_KEYS } from "@/constants";
 
 export type todoAction =
   | { type: typeof TODO_CONTEXT_KEYS.ADD_TODO; payload: string }
@@ -20,18 +19,13 @@ export const todoReducer = (state: Todo[], action: todoAction) => {
         title: action.payload,
         status: TodoStatus.TODO,
       };
-
-      const todoList = [...state, todoInstance];
-      storage.set(STORAGE_KEYS.TODO_LIST, JSON.stringify(todoList));
-      return todoList;
+      return [...state, todoInstance];
     case TODO_CONTEXT_KEYS.UPDATE_STATUS:
-      const updatedTodoList = state.map((todo) =>
+      return state.map((todo) =>
         todo.id === action.payload.id
           ? { ...todo, status: action.payload.newStatus }
           : todo,
       );
-      storage.set(STORAGE_KEYS.TODO_LIST, JSON.stringify(updatedTodoList));
-      return updatedTodoList;
     default:
       return state;
   }

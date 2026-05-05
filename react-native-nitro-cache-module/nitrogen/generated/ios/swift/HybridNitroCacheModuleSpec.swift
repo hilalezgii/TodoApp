@@ -13,7 +13,7 @@ public protocol HybridNitroCacheModuleSpec_protocol: HybridObject {
   
 
   // Methods
-  func setItem(key: String, value: String, ttl: Double) throws -> Void
+  func setItem(key: String, value: String, ttl: Double?) throws -> Void
   func getItem(key: String) throws -> Variant_NullType_String
   func removeItem(key: String) throws -> Void
   func clear() throws -> Void
