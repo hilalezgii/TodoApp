@@ -1,4 +1,3 @@
-cat > /Users/ademalkan/Desktop/TodoApp/node_modules/react-native-nitro-cache-module/android/src/main/java/com/nitrocachemodule/HybridNitroCacheModule.kt << 'EOF'
 package com.nitrocachemodule
 
 import android.content.Context
