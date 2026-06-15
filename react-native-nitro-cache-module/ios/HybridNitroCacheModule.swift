@@ -37,8 +37,8 @@ class HybridNitroCacheModule: HybridNitroCacheModuleSpec {
     try? data.write(to: storageURL, options: .atomic)
   }
 
-  func setItem(key: String, value: String, ttl: Double) throws -> Void {
-    let expireAt: Double? = ttl > 0 ? Date().timeIntervalSince1970 * 1000 + ttl : nil
+  func setItem(key: String, value: String, ttl: Double?) throws -> Void {
+    let expireAt: Double? = (ttl ?? 0) > 0 ? Date().timeIntervalSince1970 * 1000 + ttl! : nil
     cache[key] = CacheEntry(value: value, expireAt: expireAt)
     saveToDisk()
     print("Kaydedildi: \(key)")

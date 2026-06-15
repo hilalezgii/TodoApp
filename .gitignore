@@ -41,8 +41,5 @@ app-example
 # generated native folders
 /ios
 /android
-<<<<<<< HEAD
 react-native-nitro-cache-module/
 ios/Pods/
-=======
->>>>>>> fd17ea8c6554a6f2a0ac902fa173e2cf317eb3f4
