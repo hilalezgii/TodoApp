@@ -1221,6 +1221,7 @@
           <option name="screenY" value="2400" />
         </PersistentDeviceSelectionData>
         <PersistentDeviceSelectionData>
+<<<<<<< HEAD
           <option name="api" value="36" />
           <option name="brand" value="samsung" />
           <option name="codename" value="m1q" />
@@ -1245,6 +1246,8 @@
           <option name="screenY" value="2340" />
         </PersistentDeviceSelectionData>
         <PersistentDeviceSelectionData>
+=======
+>>>>>>> fd17ea8c6554a6f2a0ac902fa173e2cf317eb3f4
           <option name="api" value="34" />
           <option name="brand" value="motorola" />
           <option name="codename" value="manaus" />
@@ -1454,6 +1457,7 @@
         <PersistentDeviceSelectionData>
           <option name="api" value="36" />
           <option name="brand" value="samsung" />
+<<<<<<< HEAD
           <option name="codename" value="q7mq" />
           <option name="id" value="q7mq" />
           <option name="labId" value="google" />
@@ -1466,6 +1470,8 @@
         <PersistentDeviceSelectionData>
           <option name="api" value="36" />
           <option name="brand" value="samsung" />
+=======
+>>>>>>> fd17ea8c6554a6f2a0ac902fa173e2cf317eb3f4
           <option name="codename" value="r0q" />
           <option name="id" value="r0q" />
           <option name="labId" value="google" />

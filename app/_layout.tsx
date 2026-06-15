@@ -13,7 +13,10 @@ import { TodoProvider } from "../store/todoContext";
 export default function RootLayout() {
   const colorScheme = useColorScheme();
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> fd17ea8c6554a6f2a0ac902fa173e2cf317eb3f4
   return (
     <GluestackUIProvider mode={(colorScheme ?? "light") as "light" | "dark"}>
       <TodoProvider>
