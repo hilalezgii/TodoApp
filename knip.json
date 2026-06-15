@@ -1,0 +1,18 @@
+{
+  "$schema": "https://unpkg.com/knip@5/schema.json",
+  "entry": ["app/_layout.tsx", "app/**/*.{ts,tsx}"],
+  "project": ["**/*.{ts,tsx}"],
+  "ignore": [
+    "components/ui/**/*.{ts,tsx}",
+    "constants/theme.ts",
+    "babel.config.js",
+    "metro.config.js"
+  ],
+  "ignoreDependencies": [
+    "@expo/vector-icons",
+    "expo-router",
+    "react-native-safe-area-context",
+    "react-native-screens",
+    "nativewind"
+  ]
+}
