@@ -39,7 +39,8 @@ yarn-error.*
 app-example
 
 # generated native folders
-/ios
 /android
 react-native-nitro-cache-module/
 ios/Pods/
+ios/build/
+ios/DerivedData/
