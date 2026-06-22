@@ -4,6 +4,7 @@ import React, {
   ReactNode,
   useContext,
   useMemo,
+  useCallback,
 } from "react";
 import { todoReducer } from "./todoReducer";
 import { TodoStatus, Todo } from "@/types/todo";
@@ -28,13 +29,13 @@ export const TodoContext = createContext<TodoContextType | undefined>(
 export const TodoProvider = ({ children }: { children: ReactNode }) => {
   const [todos, dispatch] = useReducer(todoReducer, []);
 
-  const loadTodos = () => {
+  const loadTodos = useCallback(() => {
     const cached = getCachedTodos();
     if (cached) {
       dispatch({ type: TODO_CONTEXT_KEYS.INITIALIZE, payload: cached });
       console.log("AppState: Cache'den veriler tazelendi.");
     }
-  };
+  }, []);
 
   const initialize = (todoList: Todo[]) => {
     const cached = getCachedTodos();
